@@ -1,12 +1,15 @@
+import { Hero } from "@/components/Hero";
+import { Navbar } from "@/components/Navbar";
+import { Sample } from "@/components/Sample";
 import Image from "next/image";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <h1>Hello World</h1>
-        <button className="btn btn-primary">Hello daisyUI!</button>
-      </div>
-    </main>
+    <div>
+      <Navbar/>
+      <Hero/>
+      <Sample/>
+        <h1>Home Page</h1>
+    </div>
   );
 }
