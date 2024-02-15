@@ -8,6 +8,7 @@ export const Navbar = () => {
             <Link className="btn btn-ghost text-xl" href="/">移加租屋</Link>
         </div>
         <div className="flex-none">
+          
           {/* Hamburger Button */}
           <label className="btn btn-circle swap swap-rotate md:hidden">
             <input type="checkbox" />
@@ -30,17 +31,12 @@ export const Navbar = () => {
               <polygon points="400 145.49 366.51 112 256 222.51 145.49 112 112 145.49 222.51 256 112 366.51 145.49 400 256 289.49 366.51 400 400 366.51 289.49 256 400 145.49" />
             </svg>
           </label>
+
           {/* Navigation Links */}
           <ul className="menu menu-horizontal px-1 hidden md:flex">
-            <li>
-              <Link href="/roommate">夾租區</Link>
-            </li>
-            <li>
-              <Link href="/rent">租屋區</Link>
-            </li>
-            <li>
-              <Link href="/login">登入</Link>
-            </li>
+            <li><Link href="/roommate">夾租區</Link></li>
+            <li><Link href="/rent">租屋區</Link></li>
+            <li><Link href="/login">登入</Link></li>
           </ul>
         </div>
     </div>
