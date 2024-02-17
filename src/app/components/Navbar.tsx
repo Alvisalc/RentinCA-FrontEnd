@@ -8,7 +8,7 @@ export const Navbar = () => {
             <Link className="btn btn-ghost text-xl" href="/">移加租屋</Link>
         </div>
         <div className="flex-none">
-          
+
           {/* Hamburger Button */}
           <label className="btn btn-circle swap swap-rotate md:hidden">
             <input type="checkbox" />
