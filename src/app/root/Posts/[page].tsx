@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Post, PageParams } from '@/types/data';
-import { posts } from '../data';
+import { posts } from '../../data';
 
 // Simulated data fetching (replace this with your actual data fetching logic)
 const fetchPosts = (pageNumber: number) => {
