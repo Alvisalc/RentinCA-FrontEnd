@@ -6,7 +6,6 @@ export const posts: Post[] = [
     { id: 1, heading: '搵人夾租 多倫多七月落地', price: 'Budget: 1500-1600/month', date: '2022-02-15' },
     { id: 2, heading: '搵人頂租 North York主人房獨立廁所', price: 'Price: 1200/month', date: '2022-02-16' },
     { id: 3, heading: 'Condo放租一房獨立廁所 一年租約', price: 'Price: 1500/month', date: '2022-02-17' },
-    // Add 20 more posts
     { id: 4, heading: 'Downtown單間套房短租', price: 'Price: 1300/month', date: '2022-02-18' },
     { id: 5, heading: 'Scarborough學生宿舍招租', price: 'Price: 800/month', date: '2022-02-19' },
     { id: 6, heading: 'Markham整套出租 獨立入口', price: 'Price: 1800/month', date: '2022-02-20' },
