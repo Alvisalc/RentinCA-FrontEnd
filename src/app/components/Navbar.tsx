@@ -36,7 +36,7 @@ export const Navbar = () => {
           <ul className="menu menu-horizontal px-1 hidden md:flex">
             <li><Link href="/roommate">夾租區</Link></li>
             <li><Link href="/rent">租屋區</Link></li>
-            <li><Link href="/login">登入</Link></li>
+            <li><Link href="/sign-in">登入</Link></li>
           </ul>
         </div>
     </div>
