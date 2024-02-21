@@ -1,7 +1,15 @@
+"use client"
+
 import React from 'react'
 import Link from 'next/link';
+import { UserButton } from '@clerk/nextjs';
+import { useUser } from '@clerk/clerk-react'
+
 
 export const Navbar = () => {
+
+  const { isSignedIn } = useUser();
+
   return (
     <div className="navbar bg-base-100">
         <div className="flex-1">
@@ -36,7 +44,13 @@ export const Navbar = () => {
           <ul className="menu menu-horizontal px-1 hidden md:flex">
             <li><Link href="/roommate">夾租區</Link></li>
             <li><Link href="/rent">租屋區</Link></li>
-            <li><Link href="/sign-in">登入</Link></li>
+            <li>
+              {isSignedIn ? (
+                <UserButton afterSignOutUrl="/" /> // Show only the UserButton if signed in
+              ) : (
+                <Link href="/sign-in">登入</Link> // Show "登入" text linking to sign-in page if not signed in
+              )}
+            </li>
           </ul>
         </div>
     </div>
