@@ -6,10 +6,11 @@ export type Post = {
 };
 
 export type PageProps = {
-posts: Post[];
-totalPages: number;
+    posts: Post[];
+    totalPages: number;
 };
 
 export type PageParams = {
     page: string;
 }
+
