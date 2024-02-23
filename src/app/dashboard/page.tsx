@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 
 export const Page = () => {
   return (
@@ -9,8 +10,7 @@ export const Page = () => {
           <p className="mb-8 leading-relaxed text-base">Your personal space to manage posts.</p>
           <div className="flex flex-wrap items-center">
             <button className="mr-4 mb-4 btn btn-secondary">My Post</button>
-            <button className="mr-4 mb-4 btn btn-accent">+ 搵人夾租</button>
-            <button className="mb-4 btn btn-accent">+ </button>
+            <Link href="/post-selection"><button className="mr-4 mb-4 btn btn-accent">+ Create a new post</button></Link>
           </div>
         </div>
       </div>
