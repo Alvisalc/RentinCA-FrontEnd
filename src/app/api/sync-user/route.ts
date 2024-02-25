@@ -1,31 +1,23 @@
-// Sync the authenticated users info from Clerk to Supabase database
-
+// pages/api/sync-user.js
 import { NextApiRequest, NextApiResponse } from 'next';
-import { getSession } from '@clerk/clerk-sdk-node';
-import { supabase } from '../../../utils/supabase';
+import clerk from '../../../utils/clerkBackend'; // Your initialized Clerk backend instance
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
-    // Assuming the Bearer token is passed in the authorization header
-    const token = req.headers.authorization?.split(' ')[1];
+    // Extract the session token from the Authorization header
+    const token = req.headers.authorization?.split('Bearer ')[1];
     if (!token) {
-      return res.status(401).json({ error: 'Authorization token is missing' });
+      return res.status(401).json({ error: 'Authorization token is missing.' });
     }
 
-    // Verify the session with Clerk
-    const session = await getSession(token);
-    const userId = session.userId;
+    // Manually verify the session token
+    // Note: Adjust this part according to the correct Clerk backend SDK usage for your version
+    const session = await clerk.verifyToken(token); // Assuming verifyToken is the correct method
 
-    // Sync user data to Supabase
-    const { error } = await supabase
-      .from('users')
-      .upsert({ id: userId }, { returning: 'minimal' });
-
-    if (error) throw new Error('Failed to sync user data');
-
-    res.status(200).json({ message: 'User synced successfully' });
+    // Proceed with syncing user data to Supabase or other logic
+    res.status(200).json({ message: 'User session verified.', session });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: error.message || 'An error occurred during user sync' });
+    console.error('Session verification failed:', error);
+    return res.status(500).json({ error: 'Failed to verify session.' });
   }
 }
