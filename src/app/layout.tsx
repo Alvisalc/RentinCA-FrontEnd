@@ -3,8 +3,9 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import { ClerkLoaded, ClerkProvider } from "@clerk/nextjs";
-import { UserProvider } from "./Context/GlobalContext";
+import { ClerkProvider } from "@clerk/nextjs";
+import { useClerkJWT } from "./api/Clerk-user/route";
+import { AuthProvider } from './Context/AuthContext';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,7 +15,7 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-  children,
+children,
 }: Readonly<{ // may delete Readonly later to test the setting
   children: React.ReactNode;
 }>) {
@@ -22,13 +23,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <ClerkProvider>
-          <ClerkLoaded>
-            <UserProvider>
-                  <Navbar/>
+          <AuthProvider>
+              <Navbar/>
                     {children}
                   <Footer/>
-            </UserProvider>
-          </ClerkLoaded>
+          </AuthProvider>
         </ClerkProvider>
       </body>
     </html>
