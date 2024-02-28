@@ -1,6 +1,6 @@
 // pages/api/sync-user.js
 import { NextApiRequest, NextApiResponse } from 'next';
-import { supabase } from '../../../utils/supabaseClient'; // Ensure this points to your Supabase client setup
+import { supabase } from '../../../utils/supabase'; // Ensure this points to your Supabase client setup
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   // Extract the Authorization header where the Clerk JWT is expected

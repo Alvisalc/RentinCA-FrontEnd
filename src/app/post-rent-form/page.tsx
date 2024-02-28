@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 
 // Testing Page
-
 const RentPostForm = () => {
   const [formData, setFormData] = useState({
     heading: '',
