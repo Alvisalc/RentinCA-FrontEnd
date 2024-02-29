@@ -31,9 +31,16 @@ export interface RentPostData {
 }
 
 export interface RoommatePostData {
-    type: string;
-    size: string;
-    location: string;
-    price: number;
-    post_id?: number; // Optional since it will be added after inserting into Post
+    clerk_user_id: string;
+    clerk_username: string;
+    heading: string;
+    sex: string;
+    preferred_location: string;
+    preferred_type: string;
+    preferred_date: string;
+    budget: number;
+    about_me: string;
+    about_roommate: string;
+    other?: string;
+    contact: string;
 }

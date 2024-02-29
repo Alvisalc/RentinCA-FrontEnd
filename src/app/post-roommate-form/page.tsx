@@ -1,30 +1,58 @@
 "use client"
-import React, { useState } from 'react';
+import { RoommatePostData } from '@/types/data';
+import { supabaseClient } from '@/utils/supabase';
+import { useAuth, useUser } from '@clerk/nextjs';
+import React, { ChangeEvent, FormEvent, useState } from 'react';
 
 const RoommatePostForm = () => {
-  const [formData, setFormData] = useState({
+  const {getToken} = useAuth();
+  const {user} = useUser();
+
+  const [formData, setFormData] = useState<RoommatePostData>({
+    clerk_user_id: user?.id ?? '',
+    clerk_username: user?.username ?? '',
     heading: '',
-    date: '',
     sex: '',
-    budget: '',
     preferred_location: '',
+    preferred_type: '',
+    preferred_date:'',
+    budget: 0,
     about_me: '',
-    roommate_expectation: '',
+    about_roommate: '',
+    other: '',
     contact: ''
   });
 
-  const handleInputChange = (e: { target: { name: any; value: any; }; }) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
+    setFormData(prevState => ({ ...prevState, [name]: value }));
   };
 
-  const handleSubmit = (e: { preventDefault: () => void; }) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    console.log('Form data:', formData);
-    // Handle form submission, e.g., send data to your backend or API
+
+    const dynamicFormData = {
+      ...formData,
+      clerk_user_id: user?.id ?? '',
+      clerk_username: user?.username ?? '',
+    };
+
+    const supabaseAccessToken = await getToken({template: 'supabase'});
+
+    const supabase = await supabaseClient(supabaseAccessToken!)
+
+    try {
+      // Send the form data to Supabase
+      const { data, error } = await supabase
+        .from('RoommatePost') // Make sure this matches your table name in Supabase
+        .insert([dynamicFormData]);
+
+      if (error) throw error;
+
+      console.log('Rent post submitted successfully:', data);
+    } catch (error) {
+      console.error('Error submitting rent post to Supabase:', error);
+    }
   };
 
   return (
@@ -47,7 +75,7 @@ const RoommatePostForm = () => {
                             type="radio" 
                             name="sex" 
                             value="Male" 
-                            onChange={handleInputChange} 
+                            onChange={handleChange} 
                             checked={formData.sex === 'Male'} 
                             className="form-radio" 
                         />
@@ -58,7 +86,7 @@ const RoommatePostForm = () => {
                             type="radio" 
                             name="sex" 
                             value="Female" 
-                            onChange={handleInputChange} 
+                            onChange={handleChange} 
                             checked={formData.sex === 'Female'} 
                             className="form-radio" 
                         />
@@ -71,25 +99,25 @@ const RoommatePostForm = () => {
         {/* Date */}
         <div className="mb-4">
           <label htmlFor="date" className="block text-sm font-medium text-gray-700">Date</label>
-          <input type="date" id="date" name="date" value={formData.date} onChange={handleInputChange} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm" required />
+          <input type="date" id="date" name="date" value={formData.preferred_date} onChange={handleChange} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm" required />
         </div>
 
         {/* Budget */}
         <div className="mb-4">
           <label htmlFor="budget" className="block text-sm font-medium text-gray-700">Budget</label>
-          <input type="number" id="budget" name="budget" value={formData.budget} onChange={handleInputChange} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm" required />
+          <input type="number" id="budget" name="budget" value={formData.budget} onChange={handleChange} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm" required />
         </div>
 
         {/* About Me */}
         <div className="mb-4">
           <label htmlFor="about_me" className="block text-sm font-medium text-gray-700">About Me</label>
-          <textarea id="about_me" name="about_me" value={formData.about_me} onChange={handleInputChange} rows={4} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm"></textarea>
+          <textarea id="about_me" name="about_me" value={formData.about_me} onChange={handleChange} rows={4} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm"></textarea>
         </div>
 
-        {/* Roommate Expectation */}
+        {/* About Roommate */}
         <div className="mb-4">
           <label htmlFor="roommate_expectation" className="block text-sm font-medium text-gray-700">Roommate Expectation</label>
-          <textarea id="roommate_expectation" name="roommate_expectation" value={formData.roommate_expectation} onChange={handleInputChange} rows={4} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm"></textarea>
+          <textarea id="roommate_expectation" name="roommate_expectation" value={formData.about_roommate} onChange={handleChange}  rows={4} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm"></textarea>
         </div>
 
         
