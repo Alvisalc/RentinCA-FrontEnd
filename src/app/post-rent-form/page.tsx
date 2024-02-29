@@ -1,34 +1,68 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
+import { supabaseClient } from '../../utils/supabase'; // Ensure this path is correct
+import { useAuth, useUser } from "@clerk/nextjs";
+import { RentPostData } from '@/types/data'; // Ensure this path is correct
 
-// Testing Page
-const RentPostForm = () => {
-  const [formData, setFormData] = useState({
+const RentPostForm: React.FC = () => {
+  const { getToken } = useAuth();
+  const { user } = useUser();
+
+  // Initialize form data with typed state using the RentPostData interface,
+  // but without setting clerk_user_id and clerk_username here
+  const [formData, setFormData] = useState<RentPostData>({
+    clerk_user_id: '',
+    clerk_username: '',
     heading: '',
-    date: '',
+    location: '',
     type: '',
     size: '',
-    location: '',
-    price: '',
+    price: 0,
+    date: '',
     utilities: '',
     environment: '',
-    contact: ''
+    contact: '',
   });
 
-  const handleChange = (e: { target: { name: any; value: any; }; }) => {
+  // Update formData whenever the user data changes
+  useEffect(() => {
+    if (user) {
+      setFormData(prevFormData => ({
+        ...prevFormData,
+        clerk_user_id: user.id ?? '',
+        clerk_username: user.username ?? '',
+      }));
+    }
+  }, [user]);
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
+    setFormData(prevState => ({ ...prevState, [name]: value }));
   };
 
-  const handleSubmit = (e: { preventDefault: () => void; }) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    console.log('Form data:', formData);
-    // Submit formData to your backend or API service here
+
+    const supabaseAccessToken = await getToken({ template: 'supabase' });
+    const supabase = await supabaseClient(supabaseAccessToken!);
+
+    try {
+      // Send the form data to Supabase
+      const { data, error } = await supabase
+        .from('RentPost') // Make sure this matches your table name in Supabase
+        .insert([formData]);
+
+      if (error) throw error;
+
+      console.log('Rent post submitted successfully:', data);
+      // Optionally reset the form or redirect the user
+    } catch (error) {
+      console.error('Error submitting rent post to Supabase:', error);
+    }
   };
 
+
+  
   return (
     <div className="bg-base-200 flex flex-col items-center justify-center min-h-screen py-8 px-4 md:px-0">
       <form onSubmit={handleSubmit} className="w-full max-w-lg p-8 bg-white rounded shadow">

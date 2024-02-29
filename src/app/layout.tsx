@@ -4,6 +4,7 @@ import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { ClerkProvider } from "@clerk/nextjs";
+// import { UserProvider } from "./Context/GlobalContext";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -22,9 +23,9 @@ children,
     <html lang="en">
       <body className={inter.className}>
         <ClerkProvider>
-              <Navbar/>
-                    {children}
-                  <Footer/>
+            <Navbar/>
+              {children}
+            <Footer/>
         </ClerkProvider>
       </body>
     </html>

@@ -23,37 +23,37 @@
 
 // export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 //     const { isSignedIn, user } = useUser();
-//   const [isUserSynced, setIsUserSynced] = useState(false);
+//     const [isUserSynced, setIsUserSynced] = useState(false);
 
-//   useEffect(() => {
-//     const syncUserWithSupabase = async () => {
-//       if (isSignedIn && !isUserSynced) {
-//         // Call your API to sync the user
-//         const response = await fetch('/api/sync-user', {
-//           method: 'POST',
-//           headers: {
-//             'Content-Type': 'application/json'
-//           },
-//           // Include necessary data or identifiers if required
-//         });
-        
-//         if (response.ok) {
-//           console.log('User synced with Supabase');
-//           setIsUserSynced(true); // Prevents further unnecessary syncs
-//         } else {
-//           console.error('Failed to sync user');
+//     useEffect(() => {
+//         const syncUserWithSupabase = async () => {
+//         if (isSignedIn && !isUserSynced) {
+//             // Call your API to sync the user
+//             const response = await fetch('/api/sync-user', {
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/json'
+//             },
+//             // Include necessary data or identifiers if required
+//             });
+            
+//             if (response.ok) {
+//             console.log('User synced with Supabase');
+//             setIsUserSynced(true); // Prevents further unnecessary syncs
+//             } else {
+//             console.error('Failed to sync user');
+//             }
 //         }
-//       }
-//     };
+//         };
 
-//     syncUserWithSupabase();
-//   }, [isSignedIn, isUserSynced]);
+//         syncUserWithSupabase();
+//     }, [isSignedIn, isUserSynced]);
 
-//   return (
-//     <UserContext.Provider value={{ isUserSynced, user }}>
-//       {children}
-//     </UserContext.Provider>
-//   );
+//     return (
+//         <UserContext.Provider value={{ isUserSynced, user }}>
+//         {children}
+//         </UserContext.Provider>
+//     );
 // };
 
 // // Hook to use the user context
