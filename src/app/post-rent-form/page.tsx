@@ -56,8 +56,6 @@ const RentPostForm: React.FC = () => {
     }
   };
 
-
-  
   return (
     <div className="bg-base-200 flex flex-col items-center justify-center min-h-screen py-8 px-4 md:px-0">
       <form onSubmit={handleSubmit} className="w-full max-w-lg p-8 bg-white rounded shadow">
