@@ -63,7 +63,7 @@ const RoommatePostForm = () => {
         {/* Simplified input structure for demonstration */}
         <div className="mb-4">
           <label htmlFor="heading" className="block text-sm font-medium text-gray-700">Heading</label>
-          <input type="text" id="heading" name="heading" value={formData.heading} onChange={handleInputChange} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm" required />
+          <input type="text" id="heading" name="heading" value={formData.heading} onChange={handleChange} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm" required />
         </div>
 
         {/* Sex */}
@@ -96,9 +96,19 @@ const RoommatePostForm = () => {
         </div>
 
         {/* Include inputs for all fields in your form */}
-        {/* Date */}
+
+        {/* Perferred Location */}
         <div className="mb-4">
-          <label htmlFor="date" className="block text-sm font-medium text-gray-700">Date</label>
+          <label htmlFor="preferred_location" className="block text-sm font-medium text-gray-700">Preferred location</label>
+          <input type="preferred_location" id="preferred_location" name="preferred_location" value={formData.preferred_location} onChange={handleChange} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm" required />
+        </div>
+
+        {/* Perferred Type */}
+
+
+        {/* Perferred Move-in Date */}
+        <div className="mb-4">
+          <label htmlFor="date" className="block text-sm font-medium text-gray-700">Preferred date</label>
           <input type="date" id="date" name="date" value={formData.preferred_date} onChange={handleChange} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm" required />
         </div>
 

@@ -1,14 +1,14 @@
 "use client"
 import React, { useState, ChangeEvent, FormEvent } from 'react';
-import { supabaseClient } from '../../utils/supabase'; // Ensure this path is correct
-import { useAuth, useUser } from "@clerk/nextjs";
-import { RentPostData } from '@/types/data'; // Ensure this path is correct
+import { supabaseClient } from '../../utils/supabase'; // Supabase Client API
+import { useAuth, useUser } from "@clerk/nextjs"; // clerk hooks
+import { RentPostData } from '@/types/data'; // Data type of Rent Post Data
 
 const RentPostForm: React.FC = () => {
-  const { getToken } = useAuth();
-  const { user } = useUser();
+  const { getToken } = useAuth(); //get Token from clerk
+  const { user } = useUser(); // clerk authenicated user
 
-  // Initialize form data with typed state using the RentPostData interface
+  // Form data with useState using the RentPostData interface
   const [formData, setFormData] = useState<RentPostData>({
     clerk_user_id: user?.id ?? '',
     clerk_username: user?.username ?? '',
@@ -28,32 +28,25 @@ const RentPostForm: React.FC = () => {
     setFormData(prevState => ({ ...prevState, [name]: value }));
   };
 
+  // handle Stubmit function
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-
+    // insert clerk_user_id & username to the database
     const dynamicFormData = {
       ...formData,
       clerk_user_id: user?.id ?? '',
       clerk_username: user?.username ?? '',
     };
 
-    const supabaseAccessToken = await getToken({template: 'supabase'});
+    const supabaseAccessToken = await getToken({template: 'supabase'}); // get JWT token
+    const supabase = await supabaseClient(supabaseAccessToken!) // get supabase token
 
-    const supabase = await supabaseClient(supabaseAccessToken!)
-
-    try {
-      // Send the form data to Supabase
-      const { data, error } = await supabase
-        .from('RentPost') // Make sure this matches your table name in Supabase
-        .insert([dynamicFormData]);
-
-      if (error) throw error;
-
-      console.log('Rent post submitted successfully:', data);
-      // Optionally reset the form or redirect the user
-    } catch (error) {
-      console.error('Error submitting rent post to Supabase:', error);
-    }
+    // Send the form data to Supabase
+    const { data, error } = await supabase
+      .from('RentPost') // Supabase database Table
+      .insert([dynamicFormData]); //insert row data
+    if (error) throw error;
+    console.log('Rent post submitted successfully:', data);
   };
 
   return (
