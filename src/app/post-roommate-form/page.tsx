@@ -105,7 +105,6 @@ const RoommatePostForm = () => {
 
         {/* Perferred Type */}
 
-
         {/* Perferred Move-in Date */}
         <div className="mb-4">
           <label htmlFor="date" className="block text-sm font-medium text-gray-700">Preferred date</label>
@@ -130,7 +129,11 @@ const RoommatePostForm = () => {
           <textarea id="roommate_expectation" name="roommate_expectation" value={formData.about_roommate} onChange={handleChange}  rows={4} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm"></textarea>
         </div>
 
-        
+        {/* Contact */}
+        <div className="mb-4">
+          <label htmlFor="contact" className="block text-sm font-medium text-gray-700">Contact</label>
+          <input type="text" id="contact" name="contact" value={formData.contact} onChange={handleChange} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm" required/>
+        </div>
 
         <button type="submit" className="px-4 py-2 bg-accent text-white rounded ">Submit Post</button>
       </form>

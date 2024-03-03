@@ -180,22 +180,6 @@ const RentPostForm: React.FC = () => {
             required
           />
         </div>
-        
-        {/* Iterate over formData to create form fields
-        {Object.entries(formData).map(([key, value]) => (
-          <div key={key} className="mb-4">
-            <label htmlFor={key} className="block text-sm font-medium text-gray-700 capitalize">{key}</label>
-            <input
-              type={key === 'date' ? 'date' : 'text'}
-              id={key}
-              name={key}
-              value={value}
-              onChange={handleChange}
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm"
-              required={key !== 'utilities' && key !== 'environment'} // Example of optional fields
-            />
-          </div>
-        ))} */}
 
         <button type="submit" className="px-4 py-2 bg-accent text-white rounded ">Submit Post</button>
       </form>
