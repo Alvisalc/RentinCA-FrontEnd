@@ -57,7 +57,7 @@ const RoommatePostForm = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-base-200">
-      <form onSubmit={handleSubmit} className="w-full max-w-lg p-8 bg-white rounded shadow">
+      <form onSubmit={handleSubmit} className="m-8 w-full max-w-lg p-8 bg-white rounded shadow">
         <h2 className="text-xl font-semibold mb-4">Create a Roommate Post</h2>
 
         {/* Simplified input structure for demonstration */}
@@ -107,8 +107,8 @@ const RoommatePostForm = () => {
 
         {/* Perferred Move-in Date */}
         <div className="mb-4">
-          <label htmlFor="date" className="block text-sm font-medium text-gray-700">Preferred date</label>
-          <input type="date" id="date" name="date" value={formData.preferred_date} onChange={handleChange} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm" required />
+          <label htmlFor="preferred_date" className="block text-sm font-medium text-gray-700">Preferred date</label>
+          <input type="date" id="preferred_date" name="preferred_date" value={formData.preferred_date} onChange={handleChange} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm" required />
         </div>
 
         {/* Budget */}
@@ -125,8 +125,8 @@ const RoommatePostForm = () => {
 
         {/* About Roommate */}
         <div className="mb-4">
-          <label htmlFor="roommate_expectation" className="block text-sm font-medium text-gray-700">Roommate Expectation</label>
-          <textarea id="roommate_expectation" name="roommate_expectation" value={formData.about_roommate} onChange={handleChange}  rows={4} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm"></textarea>
+          <label htmlFor="about_roommate" className="block text-sm font-medium text-gray-700">Roommate Expectation</label>
+          <textarea id="about_roommate" name="about_roommate" value={formData.about_roommate} onChange={handleChange}  rows={4} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm"></textarea>
         </div>
 
         {/* Contact */}

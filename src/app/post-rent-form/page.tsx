@@ -51,7 +51,7 @@ const RentPostForm: React.FC = () => {
 
   return (
     <div className="bg-base-200 flex flex-col items-center justify-center min-h-screen py-8 px-4 md:px-0">
-      <form onSubmit={handleSubmit} className="w-full max-w-lg p-8 bg-white rounded shadow">
+      <form onSubmit={handleSubmit} className="m-8 w-full max-w-lg p-8 bg-white rounded shadow">
         <h2 className="text-xl font-semibold mb-4">Create a Rent Post</h2>
 
         <div className="mb-4">
