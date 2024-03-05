@@ -1,10 +1,11 @@
-import React from 'react';
+"use client"
+
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-// import { useUserContext } from '../Context/GlobalContext';
+import DashboardCard from '@/components/DashboardCard';
+
 
 export const Page = () => {
-
-  // const { isUserSynced } = useUserContext();
 
   return (
     <section className="min-h-screen bg-base-200">
@@ -21,6 +22,9 @@ export const Page = () => {
             </Link>
           </div>
 
+        <div className="post-section">
+          <DashboardCard/>
+        </div>
         </div>
       </div>
     </section>

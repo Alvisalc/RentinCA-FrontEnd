@@ -14,12 +14,10 @@ const RoommatePostForm = () => {
     heading: '',
     sex: '',
     preferred_location: '',
-    preferred_type: '',
     preferred_date:'',
     budget: 0,
     about_me: '',
     about_roommate: '',
-    other: '',
     contact: ''
   });
 
@@ -38,21 +36,14 @@ const RoommatePostForm = () => {
     };
 
     const supabaseAccessToken = await getToken({template: 'supabase'});
-
     const supabase = await supabaseClient(supabaseAccessToken!)
 
-    try {
-      // Send the form data to Supabase
-      const { data, error } = await supabase
-        .from('RoommatePost') // Make sure this matches your table name in Supabase
-        .insert([dynamicFormData]);
+    // Send the form data to Supabase
+    const { data, error } = await supabase
+      .from('RoommatePost') // Make sure this matches your table name in Supabase
+      .insert([dynamicFormData]);
+    if (error) throw error;
 
-      if (error) throw error;
-
-      console.log('Rent post submitted successfully:', data);
-    } catch (error) {
-      console.error('Error submitting rent post to Supabase:', error);
-    }
   };
 
   return (
@@ -60,7 +51,7 @@ const RoommatePostForm = () => {
       <form onSubmit={handleSubmit} className="m-8 w-full max-w-lg p-8 bg-white rounded shadow">
         <h2 className="text-xl font-semibold mb-4">Create a Roommate Post</h2>
 
-        {/* Simplified input structure for demonstration */}
+        {/* Form elements */}
         <div className="mb-4">
           <label htmlFor="heading" className="block text-sm font-medium text-gray-700">Heading</label>
           <input type="text" id="heading" name="heading" value={formData.heading} onChange={handleChange} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm" required />
@@ -71,39 +62,21 @@ const RoommatePostForm = () => {
             <span className="block text-sm font-medium text-gray-700">Sex</span>
                 <div className="mt-2">
                     <label className="inline-flex items-center mr-6">
-                        <input 
-                            type="radio" 
-                            name="sex" 
-                            value="Male" 
-                            onChange={handleChange} 
-                            checked={formData.sex === 'Male'} 
-                            className="form-radio" 
-                        />
-                            <span className="ml-2">Male</span>
-                        </label>
-                        <label className="inline-flex items-center">
-                        <input 
-                            type="radio" 
-                            name="sex" 
-                            value="Female" 
-                            onChange={handleChange} 
-                            checked={formData.sex === 'Female'} 
-                            className="form-radio" 
-                        />
-                        <span className="ml-2">Female</span>
-                </label>
-            </div>
-        </div>
-
-        {/* Include inputs for all fields in your form */}
+                      <input type="radio" name="sex" value="Male" onChange={handleChange} checked={formData.sex === 'Male'} className="form-radio" />
+                      <span className="ml-2">Male</span>
+                    </label>
+                    <label className="inline-flex items-center">
+                      <input type="radio" name="sex" value="Female" onChange={handleChange} checked={formData.sex === 'Female'} className="form-radio" />
+                      <span className="ml-2">Female</span>
+                    </label>
+                </div>
+          </div>
 
         {/* Perferred Location */}
         <div className="mb-4">
           <label htmlFor="preferred_location" className="block text-sm font-medium text-gray-700">Preferred location</label>
           <input type="preferred_location" id="preferred_location" name="preferred_location" value={formData.preferred_location} onChange={handleChange} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm" required />
         </div>
-
-        {/* Perferred Type */}
 
         {/* Perferred Move-in Date */}
         <div className="mb-4">
@@ -134,8 +107,10 @@ const RoommatePostForm = () => {
           <label htmlFor="contact" className="block text-sm font-medium text-gray-700">Contact</label>
           <input type="text" id="contact" name="contact" value={formData.contact} onChange={handleChange} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm" required/>
         </div>
-
+        
+        {/* Submit button */}
         <button type="submit" className="px-4 py-2 bg-accent text-white rounded ">Submit Post</button>
+
       </form>
     </div>
   );
