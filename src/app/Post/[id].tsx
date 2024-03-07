@@ -35,7 +35,7 @@ interface Post {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const id = context.params?.id as string;
-    const { data, error } = await supabase
+    const { data, error } = await supabaseClient
       .from('RentPost') // check on the token problem.
       .select('*')
       .eq('id', id)
