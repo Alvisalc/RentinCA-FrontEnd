@@ -1,6 +1,5 @@
 // pages/post/[id].tsx
-import { supabaseClient } from '@/utils/supabase'; // Adjust the import path as needed
-import { useSession } from '@clerk/nextjs';
+import { supabasePublic } from '@/utils/supabase'; // Adjust the import path as needed
 import { GetServerSideProps } from 'next';
 
 interface Post {
@@ -35,7 +34,7 @@ interface Post {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const id = context.params?.id as string;
-    const { data, error } = await supabaseClient
+    const { data, error } = await supabasePublic
       .from('RentPost') // check on the token problem.
       .select('*')
       .eq('id', id)

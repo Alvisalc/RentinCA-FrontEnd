@@ -32,16 +32,3 @@ export const Page = () => {
 };
 
 export default Page;
-
-
-// {isUserSynced ? (
-//   <div className="flex flex-wrap items-center">
-//     {/* Show these buttons only if the user data has been synced */}
-//     <button className="mr-4 mb-4 btn btn-secondary">My Post</button>
-//     <Link href="/post-selection">
-//       <a className="mr-4 mb-4 btn btn-accent">+ Create a new post</a>
-//     </Link>
-//   </div>
-// ) : (
-//   <p>Syncing your data, please wait...</p>
-// )}

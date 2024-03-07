@@ -1,18 +1,18 @@
-import { createClient } from "@supabase/supabase-js";
+import { createClient } from '@supabase/supabase-js';
 
-export const supabaseClient = async (supabaseAccessToken: string) => {
-    const supabase = createClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-        {
-            global: {headers: {Authorization: `Bearer ${supabaseAccessToken}`}}
-        }
-    )
+// Initialize a Supabase client for public operations
+export const supabasePublic = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+);
 
-    // set Supabase JWT on the client object
-    // so it is sent up with all Supabase requests
-    return supabase;
-}
-
-
-// We can now use anywhere when the user sign-in to our application
+// Function to create a Supabase client with a dynamic token for authenticated operations
+export const supabaseClient = async (token: string) => {
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      global: { headers: { Authorization: `Bearer ${token}` } },
+    }
+  );
+};
