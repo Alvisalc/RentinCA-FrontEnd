@@ -1,6 +1,8 @@
 // pages/post/[id].tsx
+"use client"
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { supabasePublic } from '@/utils/supabase'; // Adjust the import path as needed
-import { GetServerSideProps } from 'next';
 
 interface Post {
     id: string;
@@ -15,41 +17,85 @@ interface Post {
     contact: string;
   }
 
-  const PostDetails: React.FC<{ post: Post }> = ({ post }) => {
-    return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">{post.heading}</h1>
-      <p>Date: {new Date(post.date).toLocaleDateString()}</p>
-      <p>Location: {post.location}</p>
-      <p>Type: {post.type}</p>
-      <p>Size: {post.size}</p>
-      <p>Price: ${post.price}</p>
-      <p>Utilities: {post.utilities}</p>
-      <p>Environment: {post.environment}</p>
-      <p>Contact: {post.contact}</p>
-      {/* Add more details as needed */}
-    </div>
-  );
-};
+  const PostDetails = () => {
+    const [post, setPost] = useState<Post | null>(null);
+    const router = useRouter();
+    const { id } = router.query;
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-    const id = context.params?.id as string;
-    const { data, error } = await supabasePublic
-      .from('RentPost') // check on the token problem.
-      .select('*')
-      .eq('id', id)
-      .single();
+    useEffect(() => {
+      const fetchData = async () => {
+        if (typeof id === 'string') { // Ensure id is a string
+          const { data, error } = await supabasePublic
+            .from('RentPost') // Adjust to your actual table name
+            .select('*')
+            .eq('id', id)
+            .single();
   
-    if (error) {
-      console.error('Error fetching post:', error);
-      return { notFound: true };
-    }
+          if (error) {
+            console.error('Error fetching post:', error);
+          } else {
+            setPost(data);
+          }
+        }
+      };
   
-    return { props: { post: data } };
+      fetchData();
+    }, [id]);
+  
+    if (!post) return <div>Loading...</div>;
+  
+    return (
+      <div className="container mx-auto p-4">
+        <h1 className="text-2xl font-bold mb-4">{post.heading}</h1>
+        <p>Date: {new Date(post.date).toLocaleDateString()}</p>
+        <p>Location: {post.location}</p>
+        <p>Type: {post.type}</p>
+        <p>Size: {post.size}</p>
+        <p>Price: ${post.price}</p>
+        {post.utilities && <p>Utilities: {post.utilities}</p>}
+        {post.environment && <p>Environment: {post.environment}</p>}
+        <p>Contact: {post.contact}</p>
+        {/* Add more details as needed */}
+      </div>
+    );
   };
   
-
-export default PostDetails;
-
+  export default PostDetails;
 
 
+
+//   const PostDetails: React.FC<{ post: Post }> = ({ post }) => {
+//     return (
+//     <div className="container mx-auto p-4">
+//       <h1 className="text-2xl font-bold mb-4">{post.heading}</h1>
+//       <p>Date: {new Date(post.date).toLocaleDateString()}</p>
+//       <p>Location: {post.location}</p>
+//       <p>Type: {post.type}</p>
+//       <p>Size: {post.size}</p>
+//       <p>Price: ${post.price}</p>
+//       <p>Utilities: {post.utilities}</p>
+//       <p>Environment: {post.environment}</p>
+//       <p>Contact: {post.contact}</p>
+//       {/* Add more details as needed */}
+//     </div>
+//   );
+// };
+
+// export const getServerSideProps: GetServerSideProps = async (context) => {
+//     const id = context.params?.id as string;
+//     const { data, error } = await supabasePublic
+//       .from('RentPost') // check on the token problem.
+//       .select('*')
+//       .eq('id', id)
+//       .single();
+  
+//     if (error) {
+//       console.error('Error fetching post:', error);
+//       return { notFound: true };
+//     }
+  
+//     return { props: { post: data } };
+//   };
+  
+
+// export default PostDetails;

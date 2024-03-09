@@ -17,19 +17,32 @@ const DashboardCard = () => {
         const fetchPosts = async () => {
         const token = await getToken({ template: 'supabase' });
         const supabase = supabaseClient(token!);
-         // Define the state with the specific type for your posts
-  
-        // Assuming your table is named 'posts' and it has a column 'clerk_user_id'
-        const { data, error } = await (await supabase)
-          .from('RentPost') // or 'RoommatePost', depending on your setup
-          .select('*')
-          .eq('clerk_user_id', user?.id);
-  
-        if (error) {
-          console.error('Error fetching posts:', error);
-        } else {
-          setPosts(data);
+        // Fetch RentPost
+        const { data: rentPostsData, error: rentPostsError } = await (await supabase)
+        .from('RentPost')
+        .select('*')
+        .eq('clerk_user_id', user?.id);
+
+        if (rentPostsError) {
+            console.error('Error fetching rent posts:', rentPostsError);
         }
+
+          // // Fetch RoommatePost
+          // const { data: roommatePostsData, error: roommatePostsError } = await (await supabase)
+          //     .from('RoommatePost')
+          //     .select('*')
+          //     .eq('clerk_user_id', user?.id);
+
+          // if (roommatePostsError) {
+          //     console.error('Error fetching roommate posts:', roommatePostsError);
+          // }
+
+          // // Combine both post types, ensuring neither is undefined before spreading
+          // const combinedPosts = [...(rentPostsData || []), ...(roommatePostsData || [])];
+
+
+          setPosts(rentPostsData || []);
+
       };
   
       if (user) {
