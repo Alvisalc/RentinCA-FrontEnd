@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useUser } from '@clerk/nextjs';
-import { supabase } from '../db/supabase';
+import { supabasePublic } from '../utils/supabase';
 
 interface Post {
   id: number;
@@ -17,7 +17,7 @@ const PostsComponent: React.FC = () => {
       if (!user) return;
 
       const userId: string = user.id;
-      const { data, error } = await supabase
+      const { data, error } = await supabasePublic
         .from('posts')
         .select('*')
         .eq('user_clerk_id', userId);
