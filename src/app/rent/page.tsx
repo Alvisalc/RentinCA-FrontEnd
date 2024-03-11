@@ -1,121 +1,88 @@
-import React from 'react'
-import Link from 'next/link'
+"use client"
 
-const page = () => {
-        // Get the current date
-        const currentDate = new Date();
-    
-        // Format the date as "Month Day, Year"
-        const formattedDate = currentDate.toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-        });
+import React, { useEffect, useState } from 'react';
+import { supabasePublic } from '@/utils/supabase';
 
-  return (
-    <section className="text-gray-600 body-font">
-    <div className="container px-5 py-24 mx-auto">
-        <div className="flex flex-wrap w-full mb-20 flex-col items-center text-center">
-        <h1 className="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">搵屋租樓區</h1>
-        <p className="lg:w-1/2 w-full leading-relaxed text-gray-500">This section is for sample posts ONLY</p>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            <div className="p-4">
-                <div className="border border-gray-200 p-6 rounded-lg shadow-xl">
-                <p className="text-sm text-gray-500 mb-4">Posted on {formattedDate}</p>
-                <h2 className="text-lg text-gray-900 font-medium title-font mb-2">搵人夾租 多倫多七月落地</h2>
-                <p className="leading-relaxed text-base">Budget: 1500-1600/month</p>
-                <div className="card-actions justify-end">
-                    <button className="btn btn-primary">More</button>
-                </div>
-                </div>
-            </div>
-            <div className="p-4">
-                <div className="border border-gray-200 p-6 rounded-lg shadow-xl">
-                    <p className="text-sm text-gray-500 mb-4">Posted on {formattedDate}</p>
-                    <h2 className="text-lg text-gray-900 font-medium title-font mb-2">搵人頂租 North York主人房獨立廁所</h2>
-                    <p className="leading-relaxed text-base">Price: 1200/month</p>
-                    <div className="card-actions justify-end">
-                        <button className="btn btn-primary">More</button>
-                    </div>
-                </div>
-            </div>
-            <div className="p-4">
-                <div className="border border-gray-200 p-6 rounded-lg shadow-xl">
-                    <p className="text-sm text-gray-500 mb-4">Posted on {formattedDate}</p>
-                    <h2 className="text-lg text-gray-900 font-medium title-font mb-2">Condo放租一房獨立廁所 一年租約</h2>
-                    <p className="leading-relaxed text-base">Price: 1500/month</p>
-                    <div className="card-actions justify-end">
-                        <button className="btn btn-primary">More</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            <div className="p-4">
-                <div className="border border-gray-200 p-6 rounded-lg shadow-xl">
-                <p className="text-sm text-gray-500 mb-4">Posted on {formattedDate}</p>
-                <h2 className="text-lg text-gray-900 font-medium title-font mb-2">搵人夾租 多倫多七月落地</h2>
-                <p className="leading-relaxed text-base">Budget: 1500-1600/month</p>
-                <div className="card-actions justify-end">
-                    <button className="btn btn-primary">More</button>
-                </div>
-                </div>
-            </div>
-            <div className="p-4">
-                <div className="border border-gray-200 p-6 rounded-lg shadow-xl">
-                    <p className="text-sm text-gray-500 mb-4">Posted on {formattedDate}</p>
-                    <h2 className="text-lg text-gray-900 font-medium title-font mb-2">搵人頂租 North York主人房獨立廁所</h2>
-                    <p className="leading-relaxed text-base">Price: 1200/month</p>
-                    <div className="card-actions justify-end">
-                        <button className="btn btn-primary">More</button>
-                    </div>
-                </div>
-            </div>
-            <div className="p-4">
-                <div className="border border-gray-200 p-6 rounded-lg shadow-xl">
-                    <p className="text-sm text-gray-500 mb-4">Posted on {formattedDate}</p>
-                    <h2 className="text-lg text-gray-900 font-medium title-font mb-2">Condo放租一房獨立廁所 一年租約</h2>
-                    <p className="leading-relaxed text-base">Price: 1500/month</p>
-                    <div className="card-actions justify-end">
-                        <button className="btn btn-primary">More</button>
-                    </div>
-                </div>
-            </div>
-            <div className="p-4">
-                <div className="border border-gray-200 p-6 rounded-lg shadow-xl">
-                    <p className="text-sm text-gray-500 mb-4">Posted on {formattedDate}</p>
-                    <h2 className="text-lg text-gray-900 font-medium title-font mb-2">Condo放租一房獨立廁所 一年租約</h2>
-                    <p className="leading-relaxed text-base">Price: 1500/month</p>
-                    <div className="card-actions justify-end">
-                        <button className="btn btn-primary">More</button>
-                    </div>
-                </div>
-            </div>
-            <div className="p-4">
-                <div className="border border-gray-200 p-6 rounded-lg shadow-xl">
-                    <p className="text-sm text-gray-500 mb-4">Posted on {formattedDate}</p>
-                    <h2 className="text-lg text-gray-900 font-medium title-font mb-2">Condo放租一房獨立廁所 一年租約</h2>
-                    <p className="leading-relaxed text-base">Price: 1500/month</p>
-                    <div className="card-actions justify-end">
-                        <button className="btn btn-primary">More</button>
-                    </div>
-                </div>
-            </div>
-            <div className="p-4">
-                <div className="border border-gray-200 p-6 rounded-lg shadow-xl">
-                    <p className="text-sm text-gray-500 mb-4">Posted on {formattedDate}</p>
-                    <h2 className="text-lg text-gray-900 font-medium title-font mb-2">Condo放租一房獨立廁所 一年租約</h2>
-                    <p className="leading-relaxed text-base">Price: 1500/month</p>
-                    <div className="card-actions justify-end">
-                        <button className="btn btn-primary">More</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-  )
+interface Post {
+  id: number;
+  date: string;
+  heading: string;
+  description: string;
 }
 
-export default page;
+const Page: React.FC = () => {
+    const [posts, setPosts] = useState<Post[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    // Pagination state
+    const [currentPage, setCurrentPage] = useState(1);
+    const postsPerPage = 9;
+
+    useEffect(() => {
+        const fetchPosts = async () => {
+            setLoading(true);
+            const { data, error } = await supabasePublic
+                .from('RentPost') 
+                .select('*'); 
+
+            if (error) {
+                console.error('Error fetching rent posts:', error);
+            } else {
+                setPosts(data ?? []);
+                setLoading(false);
+            }
+        };
+
+        fetchPosts();
+    }, []);
+
+    // Calculate current posts
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+
+    // Change page
+    const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+
+    // Calculate page count
+    const pageCount = Math.ceil(posts.length / postsPerPage);
+
+    if (loading) return <div>Loading...</div>;
+
+    return (
+        <section className="text-gray-600 body-font">
+            {/* Your JSX Markup */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {currentPosts.map(post => (
+                    <div key={post.id} className="p-4">
+                        <div className="border border-gray-200 p-6 rounded-lg shadow-xl">
+                            <p className="text-sm text-gray-500 mb-4">Posted on {new Date(post.date).toLocaleDateString()}</p>
+                            <h2 className="text-lg text-gray-900 font-medium title-font mb-2">{post.heading}</h2>
+                            <p className="leading-relaxed text-base">{post.description}</p>
+                            <div className="card-actions justify-end">
+                                <button className="btn btn-primary">More</button>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+            <div className="flex justify-center mt-8">
+                <nav>
+                    <ul className="flex list-none">
+                        {Array.from({ length: pageCount }, (_, i) => (
+                            <li key={i}>
+                                <a href="#" onClick={() => paginate(i + 1)} className={`px-4 py-2 mx-1 ${currentPage === i + 1 ? 'text-white bg-blue-500' : 'text-blue-500 bg-white'} rounded-lg`}>
+                                    {i + 1}
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+                </nav>
+            </div>
+        </section>
+    );
+};
+
+export default Page;
+
+
