@@ -1,11 +1,12 @@
-"use client"
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import DashboardCard from '@/components/DashboardCard';
 
 
 export const Page = () => {
+
+  // fetch user data
 
   return (
     <section className="min-h-screen bg-base-200">
@@ -23,6 +24,7 @@ export const Page = () => {
           </div>
 
         <div className="post-section">
+          {/* fetch post data */}
           <DashboardCard/>
         </div>
         </div>
