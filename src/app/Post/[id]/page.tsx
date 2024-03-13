@@ -26,32 +26,12 @@ const PostDetails = () => {
     fetchPost();
   }, [postId]);
 
-  const handleDelete = async () => {
-    const { error } = await supabasePublic
-      .from("RentPost")
-      .delete()
-      .match({ id: postId });
-
-    if (error) console.error("Error deleting post:", error);
-    else router.push("/dashboard"); // Navigate back to the dashboard after deletion
-  };
-
   if (!post) return <div>Loading...</div>;
 
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">{post.heading}</h1>
-      {/* Display other post details */}
       <div className="flex justify-end gap-4">
-        <button
-          className="btn btn-secondary"
-          onClick={() => router.push(`/post/edit/${postId}`)} // Navigate to edit page
-        >
-          Modify
-        </button>
-        <button className="btn btn-danger" onClick={handleDelete}>
-          Delete
-        </button>
       </div>
     </div>
   );

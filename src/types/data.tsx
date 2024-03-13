@@ -1,4 +1,5 @@
 export type Post = {
+    location: ReactNode;
     id: number;
     heading: string;
     price: string;
