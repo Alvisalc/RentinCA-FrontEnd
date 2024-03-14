@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export type Post = {
     location: ReactNode;
     id: number;

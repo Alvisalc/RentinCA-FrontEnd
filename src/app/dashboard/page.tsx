@@ -4,17 +4,14 @@ import Link from 'next/link';
 import DashboardCard from '@/components/DashboardCard';
 import { useAuth, useUser } from '@clerk/nextjs';
 import { RentPostData } from '@/types/data';
-import { useRouter } from 'next/router';
 import { supabaseClient } from '@/utils/supabase';
 
 
 export const Page = () => {
-
   // fetch user data
   const { user } = useUser();
   const { getToken } = useAuth();
   const [posts, setPosts] = useState<RentPostData[]>([]);
-  const router = useRouter();
 
   useEffect(() => {
       const fetchPosts = async () => {
@@ -70,7 +67,7 @@ export const Page = () => {
 
         <div className="post-section">
           {/* fetch post data */}
-          <DashboardCard/>
+          <DashboardCard posts={posts}/>
         </div>
         </div>
       </div>
