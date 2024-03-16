@@ -60,7 +60,7 @@ const Page: React.FC = () => {
                             <h2 className="text-lg text-gray-900 font-medium title-font mb-2">{post.heading}</h2>
                             <p className="leading-relaxed text-base">{post.description}</p>
                             <div className="card-actions justify-end">
-                                <button className="btn btn-primary">More</button>
+                                <a href={`/rent/${post.id}`} className="btn btn-primary">More</a>
                             </div>
                         </div>
                     </div>
