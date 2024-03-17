@@ -51,6 +51,11 @@ const Page: React.FC = () => {
 
     return (
         <section className="text-gray-600 body-font">
+                <div className="flex flex-wrap w-full mb-20 flex-col items-center text-center">
+                <h1 className="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">搵人夾租區</h1>
+                <p className="lg:w-1/2 w-full leading-relaxed text-gray-500">This section is for sample posts ONLY</p>
+                </div>
+             
             {/* Your JSX Markup */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {currentPosts.map(post => (
@@ -60,7 +65,7 @@ const Page: React.FC = () => {
                             <h2 className="text-lg text-gray-900 font-medium title-font mb-2">{post.heading}</h2>
                             <p className="leading-relaxed text-base">{post.description}</p>
                             <div className="card-actions justify-end">
-                                <a href={`/rent/${post.id}`} className="btn btn-primary">More</a>
+                                <a href={`/post/${post.id}`} className="btn btn-primary">More</a>
                             </div>
                         </div>
                     </div>
