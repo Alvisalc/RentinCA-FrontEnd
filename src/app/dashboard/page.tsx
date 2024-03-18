@@ -66,7 +66,6 @@ export const Page = () => {
           </div>
 
         <div className="post-section">
-          {/* fetch post data */}
           <DashboardCard posts={posts}/>
         </div>
         </div>
