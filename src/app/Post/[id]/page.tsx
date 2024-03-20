@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { supabasePublic } from '@/utils/supabase';
 import { RentPostData } from '@/types/data';
+import RentPostDetail from '@/components/Rent/RentPostDetail';
 
 const PostDetails = () => {
   const [post, setPost] = useState<RentPostData | null>(null);
@@ -11,9 +12,6 @@ const PostDetails = () => {
   // Extracting the post ID from the URL or search parameters
   // Assuming your URL pattern is `/post/[id]`
   const postId = pathname.split('/').pop(); // If ID is part of the URL path
-  
-  // Alternatively, if the ID is a query parameter, you can use:
-  // const postId = searchParams.get('id');
 
   useEffect(() => {
     const fetchPostData = async () => {
@@ -40,8 +38,7 @@ const PostDetails = () => {
 
   return (
     <div>
-      <h1>{post.heading}</h1>
-      {/* Render additional post details */}
+      <RentPostDetail post={post}/>
     </div>
   );
 };

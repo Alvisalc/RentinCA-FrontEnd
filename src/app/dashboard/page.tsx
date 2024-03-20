@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import DashboardCard from '@/components/DashboardCard';
 import { useAuth, useUser } from '@clerk/nextjs';
-import { RentPostData } from '@/types/data';
+import { RentPostData, RoommatePostData } from '@/types/data';
 import { supabaseClient } from '@/utils/supabase';
 
 
@@ -11,7 +11,8 @@ export const Page = () => {
   // fetch user data
   const { user } = useUser();
   const { getToken } = useAuth();
-  const [posts, setPosts] = useState<RentPostData[]>([]);
+  const [rentPosts, setRentPosts] = useState<RentPostData[]>([]);
+  const [roommatePosts, setRoommatePosts] = useState<RoommatePostData[]>([]); 
 
   useEffect(() => {
       const fetchPosts = async () => {
@@ -25,23 +26,21 @@ export const Page = () => {
 
       if (rentPostsError) {
           console.error('Error fetching rent posts:', rentPostsError);
+      } else {
+        setRentPosts(rentPostsData || []);
       }
 
-        // // Fetch RoommatePost
-        // const { data: roommatePostsData, error: roommatePostsError } = await (await supabase)
-        //     .from('RoommatePost')
-        //     .select('*')
-        //     .eq('clerk_user_id', user?.id);
+        // Fetch RoommatePost
+        const { data: roommatePostsData, error: roommatePostsError } = await (await supabase)
+            .from('RoommatePost')
+            .select('*')
+            .eq('clerk_user_id', user?.id);
 
-        // if (roommatePostsError) {
-        //     console.error('Error fetching roommate posts:', roommatePostsError);
-        // }
-
-        // // Combine both post types, ensuring neither is undefined before spreading
-        // const combinedPosts = [...(rentPostsData || []), ...(roommatePostsData || [])];
-
-
-        setPosts(rentPostsData || []);
+        if (roommatePostsError) {
+            console.error('Error fetching roommate posts:', roommatePostsError);
+        } else {
+          setRoommatePosts(roommatePostsData || []);
+        }
 
     };
 
@@ -66,7 +65,7 @@ export const Page = () => {
           </div>
 
         <div className="post-section">
-          <DashboardCard posts={posts}/>
+          <DashboardCard rentPosts={rentPosts} roommatePosts={roommatePosts}/>
         </div>
         </div>
       </div>
