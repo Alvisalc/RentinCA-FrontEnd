@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation';
 import { supabasePublic } from '@/utils/supabase';
 import { RentPostData } from '@/types/data';
 import RentPostDetail from '@/components/Rent/RentPostDetail';
+import Loading from '@/components/Loading';
 
 const PostDetails = () => {
   const [post, setPost] = useState<RentPostData | null>(null);
@@ -34,7 +35,7 @@ const PostDetails = () => {
     fetchPostData();
   }, [postId]);
 
-  if (!post) return <div>Loading...</div>;
+  if (!post) return <Loading/>;
 
   return (
     <div>

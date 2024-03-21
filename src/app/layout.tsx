@@ -18,14 +18,18 @@ children,
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
+    <html lang="en" className="h-full">
+      <body className={`${inter.className}`}>
         <ClerkProvider>
+        <div>
             <Navbar/>
+            <main>
               {children}
-            <Footer/>
+            </main>
+          </div>
         </ClerkProvider>
       </body>
+      <Footer/>
     </html>
   );
 }
