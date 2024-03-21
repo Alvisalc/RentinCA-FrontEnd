@@ -26,10 +26,10 @@ children,
             <main>
               {children}
             </main>
+            <Footer/>
           </div>
         </ClerkProvider>
       </body>
-      <Footer/>
     </html>
   );
 }

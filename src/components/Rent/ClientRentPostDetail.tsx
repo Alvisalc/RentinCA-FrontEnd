@@ -1,4 +1,5 @@
-import React from 'react'
+"use client"
+import React, {useState} from 'react'
 import { RentPostData } from '@/types/data'
 import { supabasePublic } from '@/utils/supabase';
 
@@ -7,13 +8,39 @@ type RentPostDataProps = {
 }
 
 const ClientRentPostDetail: React.FC<RentPostDataProps> = ({post}) => {
+    const [editMode, setEditMode] = useState(false);
+    const [editedPost, setEditedPost] = useState(post);
 
+    const toggleEditMode = () => {
+        setEditMode(!editMode);
+    };
+
+    const handleCancel = () => {
+        setEditMode(false);
+        setEditedPost(post); // Reset changes
+    };
+    // Update post req to supabase
+    const handleUpdate = async () => {
+      const { error } = await supabasePublic
+      .from('RentPost')
+      .update({ ...editedPost })
+      .match({ id: post.id });
+  
+      if (error) {
+          alert("Failed to update the post.");
+          console.error("Update error:", error);
+      } else {
+          alert("Post updated successfully.");
+          setEditMode(false); // Exit edit mode
+      }
+    }
+    // Delete post req to supabase
     const handleDelete = async () => {
         if(window.confirm("Are you sure you want to delete this post?")) {
             const {error} = await supabasePublic
             .from('RentPost')
             .delete()
-            .match({id: post.id});
+            .match({id: post.id}); // check the RLS policy and id issue !!
             
             if (error) {
                 alert("Failed to delete the post.");
@@ -55,7 +82,7 @@ const ClientRentPostDetail: React.FC<RentPostDataProps> = ({post}) => {
         <div className="flex space-x-2 mt-4">
             <button
                 className="btn btn-primary"
-                // onClick={handleEdit}
+                onClick={handleUpdate}
             >
                 Edit
             </button>
