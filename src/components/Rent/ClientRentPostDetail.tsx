@@ -2,14 +2,20 @@
 import React, {useState} from 'react'
 import { RentPostData } from '@/types/data'
 import { supabasePublic } from '@/utils/supabase';
+import { useUser } from '@clerk/nextjs';
 
 type RentPostDataProps = {
     post: RentPostData;
 }
 
-const ClientRentPostDetail: React.FC<RentPostDataProps> = ({post}) => {
+const ClientRentPostDetail: React.FC<{ post: RentPostData }> = ({ post: initialPost }) => {
     const [editMode, setEditMode] = useState(false);
-    const [editedPost, setEditedPost] = useState(post);
+    // const [editedPost, setEditedPost] = useState(post);
+    const [post, setPost] = useState(initialPost);
+    const {user} = useUser();
+
+    // Check if the current user is the creator of the post
+    const isUserCreator = user?.id === post.clerk_user_id;
 
     const toggleEditMode = () => {
         setEditMode(!editMode);
