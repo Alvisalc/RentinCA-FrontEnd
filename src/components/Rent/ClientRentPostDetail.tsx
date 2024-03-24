@@ -1,7 +1,7 @@
 "use client"
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import { RentPostData } from '@/types/data'
-import { supabasePublic } from '@/utils/supabase';
+import { supabaseClient } from '@/utils/supabase';
 import { useUser } from '@clerk/nextjs';
 
 type RentPostDataProps = {
@@ -11,26 +11,42 @@ type RentPostDataProps = {
 const ClientRentPostDetail: React.FC<{ post: RentPostData }> = ({ post: initialPost }) => {
     const [editMode, setEditMode] = useState(false);
     // const [editedPost, setEditedPost] = useState(post);
-    const [post, setPost] = useState(initialPost);
+    const [editedPost, setEditedPost] = useState<RentPostData>(initialPost); // Fixed undefined state
     const {user} = useUser();
 
+    useEffect(() => {
+      setEditedPost(initialPost);
+    }, [initialPost]);
+    
     // Check if the current user is the creator of the post
-    const isUserCreator = user?.id === post.clerk_user_id;
+    const isUserCreator = user?.id === initialPost.clerk_user_id;
 
+    // Toogle for edit mode instead of routing to another page
     const toggleEditMode = () => {
+        if (!isUserCreator) return;
         setEditMode(!editMode);
     };
 
+    // Cancel logic when user dont want to edit the post
     const handleCancel = () => {
         setEditMode(false);
-        setEditedPost(post); // Reset changes
+        setEditedPost(initialPost); // Reset changes
     };
+
+    // Handle input change
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      const {name, value} = e.target;
+      setEditedPost(prev => ({...prev, [name]: value}));
+    }
+
     // Update post req to supabase
     const handleUpdate = async () => {
-      const { error } = await supabasePublic
+      if (!isUserCreator) return;
+
+      const { data, error } = await supabaseClient
       .from('RentPost')
       .update({ ...editedPost })
-      .match({ id: post.id });
+      .match({ id: editedPost.id });
   
       if (error) {
           alert("Failed to update the post.");
@@ -43,7 +59,7 @@ const ClientRentPostDetail: React.FC<{ post: RentPostData }> = ({ post: initialP
     // Delete post req to supabase
     const handleDelete = async () => {
         if(window.confirm("Are you sure you want to delete this post?")) {
-            const {error} = await supabasePublic
+            const {error} = await supabaseClient
             .from('RentPost')
             .delete()
             .match({id: post.id}); // check the RLS policy and id issue !!
