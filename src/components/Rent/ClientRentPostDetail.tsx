@@ -4,14 +4,9 @@ import { RentPostData } from '@/types/data'
 import { supabaseClient } from '@/utils/supabase';
 import { useUser } from '@clerk/nextjs';
 
-type RentPostDataProps = {
-    post: RentPostData;
-}
-
 const ClientRentPostDetail: React.FC<{ post: RentPostData }> = ({ post: initialPost }) => {
     const [editMode, setEditMode] = useState(false);
-    // const [editedPost, setEditedPost] = useState(post);
-    const [editedPost, setEditedPost] = useState<RentPostData>(initialPost); // Fixed undefined state
+    const [editedPost, setEditedPost] = useState<RentPostData>(initialPost);
     const {user} = useUser();
 
     useEffect(() => {
@@ -52,7 +47,7 @@ const ClientRentPostDetail: React.FC<{ post: RentPostData }> = ({ post: initialP
           alert("Failed to update the post.");
           console.error("Update error:", error);
       } else {
-          alert("Post updated successfully.");
+          alert("Post updated successfully:");
           setEditMode(false); // Exit edit mode
       }
     }
@@ -101,20 +96,19 @@ const ClientRentPostDetail: React.FC<{ post: RentPostData }> = ({ post: initialP
 
 
       <p className="text-gray-600 mt-4"><span className="font-semibold">TG Contact:</span> {post.contact}</p>
-        <div className="flex space-x-2 mt-4">
-            <button
-                className="btn btn-primary"
-                onClick={handleUpdate}
-            >
-                Edit
-            </button>
-            <button
-                className="btn btn-error"
-                onClick={handleDelete}
-            >
-                Delete
-            </button>
-        </div>
+          <div className="flex space-x-2 mt-4">
+                {isUserCreator && editMode ? (
+                    <>
+                        <button className="btn btn-success" onClick={handleUpdate}>Update</button>
+                        <button className="btn btn-warning" onClick={handleCancel}>Cancel</button>
+                    </>
+                ) : isUserCreator ? (
+                    <>
+                        <button className="btn btn-primary" onClick={toggleEditMode}>Edit</button>
+                        <button className="btn btn-error" onClick={handleDelete}>Delete</button>
+                    </>
+                ) : null}
+            </div>
 
     </div>
   </div>
