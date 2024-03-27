@@ -5,12 +5,13 @@ import { supabaseClient } from '@/utils/supabase';
 import { useAuth, useUser } from '@clerk/nextjs';
 
 const ClientRentPostDetail: React.FC<{ post: RentPostData }> = ({ post: initialPost }) => {
-    const [editMode, setEditMode] = useState(false);
+    const [editMode, setEditMode] = useState(false); // Edit mode useState
     const [editedPost, setEditedPost] = useState<RentPostData>(initialPost);
 
     const { getToken } = useAuth(); //get Token from clerk
     const {user} = useUser(); // clerk authenicated user
 
+    // useEffect for the post ()
     useEffect(() => {
       setEditedPost(initialPost);
     }, [initialPost]);
@@ -56,6 +57,7 @@ const ClientRentPostDetail: React.FC<{ post: RentPostData }> = ({ post: initialP
       const supabaseAccessToken = await getToken({template: 'supabase'}); // get JWT token
       const supabase = await supabaseClient(supabaseAccessToken!) // get supabase token
 
+        // window pop-up for checking only (delete after)
         if(window.confirm("Are you sure you want to delete this post?")) {
             const {error} = await supabase
             .from('RentPost')
