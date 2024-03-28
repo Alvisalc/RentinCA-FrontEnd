@@ -1,6 +1,6 @@
 "use client"
 import React, { useState, ChangeEvent, FormEvent } from 'react';
-import { supabaseClient } from '../../utils/supabase'; // Supabase Client API
+import { supabaseClient } from '../../../utils/supabase'; // Supabase Client API
 import { useAuth, useUser } from "@clerk/nextjs"; // clerk hooks
 import { RentPostData } from '@/types/data'; // Data type of Rent Post Data
 
